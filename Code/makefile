@@ -1,11 +1,15 @@
 all: rfid
 
-rfid: main.o pispi.o
-	gcc main.o pispi.o -lwiringPi -o rfid
+rfid: main.o MFRC522.o
+	gcc main.o MFRC522.o -lwiringPi -o rfid
 
 main.o: main.c
 	gcc -c main.c 
 	
-pispi.o: pispi.c
-	gcc -c pispi.c	
+MFRC522.o: MFRC522.c
+	gcc -c MFRC522.c
+
+clean:
+	rm -f main
+	rm -f main.o MFRC522.o
 
