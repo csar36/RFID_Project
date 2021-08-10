@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MFRC522.h"
+#include "gpio.h"
 
 using std::cout;
 using std::endl;
@@ -36,6 +37,15 @@ void allocateData(uint8_t** data, uint8_t anz)
 
 int main()
 {
+	GPIO LED(GPIO_26);
+	//LED.gpioSetPin(GPIO_26);
+	LED.gpioExport();
+	LED.gpioSetDirection(PIN_OUT);
+	LED.gpioSetValue(fHIGH);
+
+
+
+
 
 	int ret;
 	int adr;
@@ -54,7 +64,7 @@ int main()
 
 	anz = 30;
 
-	allocateData(&data, anz);
+	allocateData(&data, anz);			
 	allocateData(&data_read, anz);
 
 	for(int i =0;i < 30;i++)
@@ -75,7 +85,7 @@ int main()
 
 	for(int i =0 ;i<anz;i++)
 	{
-		cout << static_cast<int>(*(data_read+i)) << endl;
+		cout << static_cast<int>(*(data_read+i)) << endl;					//cast to plot char as numbers
 	}
 
 	free(data);
