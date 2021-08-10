@@ -1,15 +1,16 @@
-all: rfid
+CC=g++
+FLAGS=-Wall -Wextra -Wno-unused -std=c++11 -lwiringPi
+OBJS=MFRC522.o 
+OUT=rfid
 
-rfid: main.o MFRC522.o
-	gcc main.o MFRC522.o -lwiringPi -o rfid
+$(OUT): $(OBJS) main.cpp
+	$(CC) $(FLAGS) $^ -o $@
 
-main.o: main.c
-	gcc -c main.c 
-	
-MFRC522.o: MFRC522.c
-	gcc -c MFRC522.c
+%.o: %.cpp %.h
+	$(CC) $(FLAGS) -c $<  -o $@
 
 clean:
-	rm -f main
-	rm -f main.o MFRC522.o
+	rm -f $(OUT)
+	rm -f *.o
 
+.PHONY: clean

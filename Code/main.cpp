@@ -1,6 +1,8 @@
-
 #include "stdafx.h"
 #include "MFRC522.h"
+
+using std::cout;
+using std::endl;
 
 
 /*
@@ -27,12 +29,6 @@ void AntennaOff()
 
 }
 */
-void allocateData(uint8_t* data, uint8_t anz)
-{
-	data = (uint8_t*) malloc(anz*sizeof(uint8_t));
-}
-
-
 
 
 int main()
@@ -42,35 +38,33 @@ int main()
 	int adr;
 	uint8_t anz;
 	int value;
-
+	uint8_t* data;
 
 	ret = SPI_init();
 	if(ret == -1)
 	{
 		printf("FEhler");
 	}
-	uint8_t* data;
-	uint8_t* data_read;
+
 
 
 	anz = 30;
 
-	allocateData(data, anz);
-	allocateData(data_read, anz);
+	data = (uint8_t*) malloc(anz*sizeof(uint8_t));
 
 
 	for(int i =0;i < 30;i++)
 	{
 		*(data+i) = 0xFF;
 	}
-	
-	writeFIFO(data, anz);
-	readFIFO(data_read, anz);
 
+	//writeFIFO(data, anz);
+	//readFIFO(data_read, anz);
+	
 
 	for(int i =0 ;i<anz;i++)
 	{
-		printf("Value: %u \n", *(data_read+i));
+		cout << static_cast<int>(*(data+i))<< endl;
 	}
 
 

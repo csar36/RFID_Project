@@ -12,7 +12,7 @@ int SPI_init()
 	
 	if(wiringPiSetup() == -1) return -1;
 	
-	ret = wiringPiSPISetupMode (chan, speed, mode);
+	ret = wiringPiSPISetupMode(chan, speed, mode);
 	return ret;
 	
 }
@@ -41,9 +41,7 @@ void writeRegister(uint8_t adr, uint8_t data)
 	
 
 	
-	wiringPiSPIDataRW(0,Buffer,2);
-	
-	
+	wiringPiSPIDataRW(0,Buffer,2);	
 }
 //passt
 

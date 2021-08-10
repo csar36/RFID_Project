@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "main_backup": "c",
-        "pispi.h": "c"
+        "pispi.h": "c",
+        "cstddef": "cpp"
     }
 }

@@ -1,8 +1,7 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef MFRC522_H
-#define	MFRC522_H
+#pragma once
 
 
 
@@ -105,4 +104,3 @@ void writeRegister(uint8_t, uint8_t);
 void writeFIFO(uint8_t*, uint8_t);
 void readFIFO(uint8_t*, uint8_t);
 
-#endif
