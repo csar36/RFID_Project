@@ -29,7 +29,10 @@ void AntennaOff()
 
 }
 */
-
+void allocateData(uint8_t** data, uint8_t anz)
+{
+	*data = (uint8_t*) malloc(anz*sizeof(uint8_t));
+}
 
 int main()
 {
@@ -39,34 +42,46 @@ int main()
 	uint8_t anz;
 	int value;
 	uint8_t* data;
+	uint8_t* data_read;
 
 	ret = SPI_init();
 	if(ret == -1)
 	{
-		printf("FEhler");
+		printf("Fehler bei der Initialiserung der SPI");
 	}
 
 
 
 	anz = 30;
 
-	data = (uint8_t*) malloc(anz*sizeof(uint8_t));
-
+	allocateData(&data, anz);
+	allocateData(&data_read, anz);
 
 	for(int i =0;i < 30;i++)
-	{
-		*(data+i) = 0xFF;
+	{	
+		if(i % 3 == 0)
+		{
+			*(data+i) = 0xFF;
+		}
+		else{
+			*(data+i) = 0x00;
+		}
+		
 	}
 
-	//writeFIFO(data, anz);
-	//readFIFO(data_read, anz);
+	writeFIFO(data, anz);
+	readFIFO(data_read, anz);
 	
 
 	for(int i =0 ;i<anz;i++)
 	{
-		cout << static_cast<int>(*(data+i))<< endl;
+		cout << static_cast<int>(*(data_read+i)) << endl;
 	}
 
+	free(data);
+	free(data_read);
+	data = NULL;
+	data_read = NULL;
 
     return 0;
 }
