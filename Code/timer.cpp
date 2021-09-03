@@ -12,7 +12,7 @@ void delay(uint32_t duration, TimerOption unit)
 
         switch(unit)
         {
-            case sec: time = time * pow(10,0); break;
+            case sec: break;
             case msec:  time = time * pow(10,3); break;
             case usec: time = time * pow(10,6); break; 
             default: std::cout << "TIMER_UNIT_ERROR" << std::endl; break;
