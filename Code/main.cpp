@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "spi.h"
 #include "gpio.h"
+#include "timer.h"
 
 int main()
 {
@@ -22,7 +23,15 @@ int main()
     printf("%u \t %u \t %u \t \n", TxData[0], TxData[1], TxData[2]);
     printf("%u \t %u \t %u \t \n", RxData[0], RxData[1], RxData[2]);
 	initGpio(21,1);
-	setGpio(21,1);
+	
+	for(int i = 0; i< 10; i++)
+	{
+		setGpio(21,1);
+		delay(2, sec);
+		setGpio(21,0);
+		delay(500, msec);
+	}
+
 
 
 

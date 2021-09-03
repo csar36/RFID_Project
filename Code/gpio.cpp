@@ -1,6 +1,5 @@
 #include "gpio.h"
-#include <string>
-#include <iostream>
+
 
 
 
@@ -38,7 +37,7 @@ int setGpio(int gpioNum, bool value)
 {
     std::string valueCmd;
     std::string path =  "/sys/class/gpio/gpio" + std::to_string(gpioNum);
-    
+
     if(opendir(path.c_str()) == NULL)
     {
         printf("GPIOPin existiert nicht oder wurde nicht exportiert!! \n");
