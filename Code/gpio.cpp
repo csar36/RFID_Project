@@ -1,190 +1,59 @@
-#include "stdafx.h"
 #include "gpio.h"
+#include <string>
+#include <iostream>
 
 
-GPIO::GPIO(){}
 
-GPIO::GPIO(GPIOPin _m_pin): m_pin(_m_pin)
+
+int initGpio(int gpioNum, bool direction)
 {
-  valuePath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/value";
-  directionPath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/direction";
-  edgePath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/edge";
-  activelowPath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/active_low";
-  exportPath=  "/sys/class/gpio/export";
-  unexportPath =  "/sys/class/gpio/unexport";
+    std::string exportCmd;
+    std::string directionCmd;
+    std::string exportPath =  "/sys/class/gpio/export";
+    std::string path =  "/sys/class/gpio/gpio" + std::to_string(gpioNum);
+
+    if(opendir(path.c_str()) == NULL)
+    {
+        exportCmd = "echo " + std::to_string(gpioNum) + " > " + exportPath;
+        system(exportCmd.c_str());
+    }
+    
+
+    if(direction)
+    {
+        directionCmd = "echo out > " + path + "/direction";
+        system(directionCmd.c_str());
+    }
+    else
+    {
+        directionCmd = "echo in > " + path + "/direction";
+        system(directionCmd.c_str());
+    }
+
+    return 0;           //could be used for error handling
 }
 
 
-
-/****f* gpio.h/gpioSetPin()
-  *  NAME
-  *    gpioSetPin() -- generiert die Ordnerpfade, um den entsprechenden GPIO - Pin einstellen zu können
-  *  INPUTS
-  *     _m_pin
-  *  RETURN VALUE
-  *     NONE
-  ******
-  * 
-*/
-void GPIO::gpioSetPin(GPIOPin _m_pin)
+int setGpio(int gpioNum, bool value)
 {
-  m_pin = _m_pin;
-  valuePath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/value";
-  directionPath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/direction";
-  edgePath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/edge";
-  activelowPath = "/sys/class/gpio/gpio" + std::to_string(m_pin) + "/active_low";
-  exportPath=  "/sys/class/gpio/" + std::to_string(m_pin) + "/export";
-  unexportPath =  "/sys/class/gpio/" + std::to_string(m_pin) + "/unexport";
-}
+    std::string valueCmd;
+    std::string path =  "/sys/class/gpio/gpio" + std::to_string(gpioNum);
+    
+    if(opendir(path.c_str()) == NULL)
+    {
+        printf("GPIOPin existiert nicht oder wurde nicht exportiert!! \n");
+        return 1;
+    }
 
-/****f* gpio.h/gpioGetPin()
-  *  NAME
-  *    gpioGetPin() -- gibt den gesetzten GPIOPin zurück; GPIO_IDLE -> kein Pin gesetzt
-  *  INPUTS
-  *     NONE
-  *  RETURN VALUE
-  *     GPIOPin m_pin    
-  ******
-  * 
-*/
-GPIOPin GPIO::gpioGetPin()
-{
-  return m_pin;
-}
-
-
-
-void GPIO::gpioExport()
-{
-  std::fstream fs(exportPath);
-  std::cout << exportPath << "PIN NUMMMER: " << m_pin << std::endl;
-  fs << m_pin;
-  fs.close();
-}
-
-void GPIO::gpioUnexport()
-{
-  std::fstream fs(unexportPath);
-  fs << m_pin;
-  fs.close();
-}
-
-
-
-/****f* gpio.h/gpioSetDirection()
-  *  NAME
-  *    gpioSetDirection() -- setzen auf Input oder Output Pin
-  *  INPUTS
-  *    PinDirection _dircetion; PIN_IN oder PIN_OUT
-  *  RETURN VALUE
-  *        
-  ******
-  * 
-*/
-bool GPIO::gpioSetDirection(PinDirection _direction)
-{
-    std::fstream fs(directionPath);
-    (_direction == PIN_OUT) ? (fs << "out") : (fs<<"in");
-    fs.close();
+    if(value)
+    {
+        valueCmd = "echo 1 > /sys/class/gpio/gpio" + std::to_string(gpioNum) + "/value";
+        system(valueCmd.c_str());
+    }
+    else
+    {
+        valueCmd = "echo 0 > /sys/class/gpio/gpio" + std::to_string(gpioNum) + "/value";
+        system(valueCmd.c_str());
+    }
     return 0;
 }
-
-/****f* gpio.h/gpioGetDirection()
-  *  NAME
-  *    gpioGetDirection() -- Rückgabe direction
-  *  INPUTS
-  *     NONE
-  *  RETURN VALUE
-  *     bool
-  *  IDEAS
-  *    
-  ******
-  * 
-*/
-bool GPIO::gpioGetDirection()
-{
-    std::fstream fs(directionPath);
-    std::string value;
-    fs >> value;
-    fs.close();
-
-    return (value == "in") ? PIN_IN : PIN_OUT;
-}
-
-/****f* gpio.h/gpioSetValue()
-  *  NAME
-  *    gpioSetValue() -- Sets the attribute value of the class GPIO to the input value
-  *  INPUTS
-  *     _value - Value which overrides the attribute value
-  *  RETURN VALUE
-  *     just 0
-  *  IDEAS
-  *     The return value could be used for error handling 
-  ******
-  * 
-  */
-bool GPIO::gpioSetValue(PinValue _value)
-{
-    std::fstream fs(valuePath);
-    (_value == fLOW) ? (fs << fLOW) : (fs<<fHIGH);
-    fs.close();
-    return 0;
-}
-
-/****f* gpio.h/gpioGetValue()
-  *  NAME
-  *    gpioGetValue()  
-  ******
-   * 
-  */
-bool GPIO::gpioGetValue()
-{
-    std::fstream fs(valuePath);
-    std::string value;
-    fs >> value;
-    fs.close();
-    return (value == "1") ? fHIGH : fLOW;
-}
-
-/****f* gpio.h/gpioSetEdge()
-  *  NAME
-  *    gpioSetEdge() -- Sets the attribute edge of the class GPIO to the input value
-  *  INPUTS
-  *     _edge - Value which overrides the attribute edge
-  *  RETURN VALUE
-  *     just 0
-  *  IDEAS
-  *     The return value could be used for error handling 
-  ******
-  * 
-  */
-int GPIO::gpioSetEdge(char _edge)
-{
-    std::fstream fs(edgePath);
-    fs << _edge;
-    fs.close();
-    return 0;
-}
-
-/****f* gpio.h/gpioActiveLow()
-  *  NAME
-  *    gpioActiveLow() -- Sets the attribute activeLows of the class GPIO to the input value
-  *  INPUTS
-  *     _activeLows - Value which overrides the attribute activeLows
-  *  RETURN VALUE
-  *     just 0
-  *  IDEAS
-  *     The return value could be used for error handling 
-  ******
-  * 
-  */
-int GPIO::gpioActiveLow(unsigned int _activeLow)
-{
-    std::fstream fs(activelowPath);
-    fs << _activeLow;
-    fs.close();
-    return 0;
-}
-
-
-

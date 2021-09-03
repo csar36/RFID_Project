@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "spi.h"
+#include "gpio.h"
 
 int main()
 {
@@ -20,6 +21,10 @@ int main()
     spiWR(fd, TxData, RxData, 3);
     printf("%u \t %u \t %u \t \n", TxData[0], TxData[1], TxData[2]);
     printf("%u \t %u \t %u \t \n", RxData[0], RxData[1], RxData[2]);
+	initGpio(21,1);
+	setGpio(21,1);
+
+
 
   return 0;
 }
