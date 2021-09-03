@@ -1,6 +1,6 @@
 CC=g++
-FLAGS=-Wall -Wextra -Wno-unused -std=c++11 -lwiringPi -pedantic
-OBJS=MFRC522.o gpio.o
+FLAGS=-Wall -Wextra -Wno-unused -std=c++11 -pedantic
+OBJS=spi.o
 OUT=rfid
 
 $(OUT): $(OBJS) main.cpp

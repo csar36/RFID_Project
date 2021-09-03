@@ -2,9 +2,6 @@
 // This is a guard condition so that contents of this file are not included
 // more than once.  
 #pragma once
-#include <wiringPi.h>
-#include <wiringPiSPI.h>
-
 
 
 #define read					0x80
@@ -96,12 +93,4 @@
 #define MFAuthent               0x0E
 #define SoftReset               0x0F
 //******************************************
-
-int SPI_init();
-
-uint8_t readRegister(uint8_t);
-void writeRegister(uint8_t, uint8_t);
-
-void writeFIFO(uint8_t*, uint8_t);
-void readFIFO(uint8_t*, uint8_t);
 
