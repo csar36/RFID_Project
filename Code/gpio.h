@@ -2,5 +2,15 @@
 
 #define GPIO_PATH "/sys/class/gpio/"
 
-int initGpio(int gpioNum, bool direction);
-int setGpio(int gpioNum, bool value);
+enum GPIOEnable{
+    LOW = 0,
+    HIGH,
+};
+
+enum GPIODirection{
+    INPUT = 0,
+    OUTPUT,
+};
+
+int initGpio(int gpioNum, GPIODirection direction);
+int setGpio(int gpioNum, GPIOEnable value);

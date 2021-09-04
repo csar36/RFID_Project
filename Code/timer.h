@@ -3,9 +3,9 @@
 
 enum TimerOption
 {
-   sec = 0,
-   msec,
-   usec,
+   SEC = 0,
+   MSEC,
+   USEC,
 };
 
 void delay(uint32_t duration, TimerOption option);

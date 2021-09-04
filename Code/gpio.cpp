@@ -4,7 +4,7 @@
 
 
 
-int initGpio(int gpioNum, bool direction)
+int initGpio(int gpioNum, GPIODirection direction)
 {
     std::string exportCmd;
     std::string directionCmd;
@@ -33,7 +33,7 @@ int initGpio(int gpioNum, bool direction)
 }
 
 
-int setGpio(int gpioNum, bool value)
+int setGpio(int gpioNum, GPIOEnable value)
 {
     std::string valueCmd;
     std::string path =  "/sys/class/gpio/gpio" + std::to_string(gpioNum);

@@ -7,9 +7,10 @@ static const uint16_t    spiDelay = 0 ;
 static const uint32_t    speed = 100000;
 
 
-int configSPI(int mode)
+int configSPI(SpiMode _mode)
 {
   int fd;
+  int mode = (int)_mode;
     if ((fd = open ("/dev/spidev0.0", O_RDWR)) < 0)
     {
       printf("Fehler");
