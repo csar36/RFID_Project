@@ -104,3 +104,17 @@ int flushFIFO(int fd)
 
 
 
+void mfrcReset()
+{
+    writeRegister(fd, CommandReg, SoftReset);
+
+    do{
+        delay(50, MSEC);
+    }while(readRegister(fd))
+   
+
+
+}
+
+int mfrcInit();
+int mfrcSelftest();

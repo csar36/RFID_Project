@@ -36,7 +36,7 @@ int configSPI(SpiMode _mode)
       printf("Fehler");
     }
 
-
+  spiDriver = fd;
   return fd;
 }
 

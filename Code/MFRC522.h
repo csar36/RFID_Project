@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "spi.h"
 #include "gpio.h"
+#include "timer.h"
 
 
 // This is a guard condition so that contents of this file are not included
@@ -108,6 +109,13 @@ unsigned char readRegister(int fd, unsigned char address);
 int writeFIFO(int fd, unsigned char* data, unsigned char anz);
 int readFIFO(int fd, unsigned char* FifoData, unsigned char anz);
 int flushFIFO(int fd);
+void mfrcReset();
+int mfrcInit();
+int mfrcSelftest();
+
+
+
+
 
 
 

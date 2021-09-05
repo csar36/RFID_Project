@@ -4,6 +4,9 @@
 #include <sys/ioctl.h>            // Needed for SPI port
 #include <linux/spi/spidev.h>     // Needed for SPI port
 
+
+int spiDriver = 0;
+
 enum SpiMode{
     MODE_0 = 0,
     MODE_1,

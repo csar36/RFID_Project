@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "timer.h"
 #include "MFRC522.h"
 
 
