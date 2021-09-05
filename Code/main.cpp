@@ -10,35 +10,12 @@ int main()
   unsigned char FifoTestCheck[64];
   unsigned char Version;
 
-  for(int i = 0;i < 64; i++)
-  {
-    FifoTest[i] = 0xFF;
-    FifoTestCheck[i] = 0;
-  }
+
 
   fd = configSPI(MODE_0);
 
-  writeFIFO(fd, FifoTest, 64);
-  readFIFO(fd, FifoTestCheck, 64);
-
-  for(int i = 0; i < 64; i++)
-  {
-    if(i % 8 == 0)
-    {
-      printf("%X \t \n", *(FifoTestCheck+i));
-    }
-    else
-    {
-      printf("%X \t", *(FifoTestCheck+i));
-    }
-  }
-
-    printf("\n FifoLevel: %X \n", readRegister(fd, FIFOLevelReg));
-
-
-  flushFIFO(fd);
-
-
+  mfrcSelftest();
+  flushFIFO();
 
  // printf("\n Value in VersionReg: %X \n", Version);
 

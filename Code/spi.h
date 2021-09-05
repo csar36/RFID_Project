@@ -5,7 +5,8 @@
 #include <linux/spi/spidev.h>     // Needed for SPI port
 
 
-int spiDriver = 0;
+
+
 
 enum SpiMode{
     MODE_0 = 0,
@@ -15,4 +16,4 @@ enum SpiMode{
 };
 
 int configSPI(SpiMode mode);
-void spiWR(int fd, unsigned char* TxData, unsigned char* RxData, int len);
+void spiWR(unsigned char* TxData, unsigned char* RxData, int len);

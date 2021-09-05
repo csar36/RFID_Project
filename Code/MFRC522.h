@@ -104,12 +104,13 @@
 #endif
 
 
-int writeRegister(int fd, unsigned char address, unsigned char data);
-unsigned char readRegister(int fd, unsigned char address);
-int writeFIFO(int fd, unsigned char* data, unsigned char anz);
-int readFIFO(int fd, unsigned char* FifoData, unsigned char anz);
-int flushFIFO(int fd);
+int writeRegister(unsigned char address, unsigned char data);
+unsigned char readRegister(unsigned char address);
+int writeFIFO(unsigned char* data, unsigned char anz);
+int readFIFO(unsigned char* FifoData, unsigned char anz);
+int flushFIFO();
 void mfrcReset();
+void AntennaOn();
 int mfrcInit();
 int mfrcSelftest();
 
