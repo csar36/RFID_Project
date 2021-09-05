@@ -18,7 +18,7 @@ int main()
     }
 
 
-    fd = configSPI(MODE_0);       //can this work? - typecast of an enum
+    fd = configSPI(MODE_0);       
 
     spiWR(fd, TxData, RxData, 3);
 
