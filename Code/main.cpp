@@ -1,20 +1,36 @@
 #include "stdafx.h"
-#include "spi.h"
-#include "gpio.h"
 #include "timer.h"
+#include "MFRC522.h"
+
 
 int main()
 {
+  int fd;
+  unsigned char data = 0xFF;
+  unsigned char Version;
+
+  fd =configSPI(MODE_0);
+  writeRegister(fd, SerialSpeedReg, data);
+  Version = readRegister(fd, SerialSpeedReg);
+  printf("\n Value in VersionReg: %X \n", Version);
+
+}
+
+
+
+#if 0           //Test Version Reg via SPI
+int main()
+{
     int retVel;
-    int speed, mode, fd;
+    int fd;
     unsigned char TxData[]= {0, 0, 0};
     unsigned char RxData[]= {0, 0, 0};
 
 
-    //Daten präperierien
+    Daten präperierien
     for(int i =0 ;i < 3; i++)
     { 
-      TxData[i] = 0xEE;
+     TxData[i] = 0xEE;
     }
 
 
@@ -39,4 +55,4 @@ int main()
 
   return 0;
 }
-
+#endif

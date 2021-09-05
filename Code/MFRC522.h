@@ -103,10 +103,10 @@
 #endif
 
 
-int writeRegister(uint8_t address, uint8_t data);
-uint8_t readRegister(uint8_t address);
-int writeFIFO(uint8_t* data, uint8_t anz);
-uint8_t* readFIFO(uint8_t anz);
+int writeRegister(int fd, unsigned char address, unsigned char data);
+unsigned char readRegister(int fd, unsigned char address);
+int writeFIFO(int fd, unsigned char* data, unsigned char anz);
+int readFIFO(int fd, unsigned char* FifoData, unsigned char anz);
 
 
 
