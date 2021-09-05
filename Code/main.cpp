@@ -7,20 +7,34 @@ int main()
 {
   int fd;
   unsigned char data = 0xFF;
-  unsigned char FifoTest[5] = {0xFE, 0x25, 0xFF, 0xFF, 0xAB};
-  unsigned char FifoTestCheck[5] = {0,0,0,0,0};
+  unsigned char FifoTest[64];
+  unsigned char FifoTestCheck[64];
   unsigned char Version;
+
+  for(int i = 0;i < 64; i++)
+  {
+    FifoTest[i] = 0xFF;
+    FifoTestCheck[i] = 0;
+  }
 
   fd = configSPI(MODE_0);
 
-  writeFIFO(fd, FifoTest, 5);
-  readFIFO(fd, FifoTestCheck, 5);
+  writeFIFO(fd, FifoTest, 64);
+  readFIFO(fd, FifoTestCheck, 64);
 
-  for(int i = 0; i < 5; i++)
+  for(int i = 0; i < 64; i++)
   {
-    printf("%X \t", *(FifoTestCheck+i));
+    if(i % 8 == 0)
+    {
+      printf("%X \t \n", *(FifoTestCheck+i));
+    }
+    else
+    {
+      printf("%X \t", *(FifoTestCheck+i));
+    }
   }
-    printf("FifoLevel: %X \n", readRegister(fd, FIFOLevelReg));
+
+    printf("\n FifoLevel: %X \n", readRegister(fd, FIFOLevelReg));
 
 
   flushFIFO(fd);
