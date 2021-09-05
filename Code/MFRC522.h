@@ -1,8 +1,13 @@
+#include "spi.h"
+#include "gpio.h"
+
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
 #pragma once
-
+#if 1               //      MFRC Defines        Bit-Shift one due to SPI-Protocol, Address-Byte
+                    //          SPI                MSB  |   B6  |   B5  |   B4  |   B3  |   B2  |   B1  |   LSB
+                    //                             R/W  |                   ADDRESS                     |    0
 
 #define read					0x80
 /*-----------Command and Status--------------*/
@@ -93,4 +98,6 @@
 #define MFAuthent               0x0E
 #define SoftReset               0x0F
 //******************************************
+
+#endif
 
