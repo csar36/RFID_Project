@@ -107,6 +107,8 @@ int writeRegister(int fd, unsigned char address, unsigned char data);
 unsigned char readRegister(int fd, unsigned char address);
 int writeFIFO(int fd, unsigned char* data, unsigned char anz);
 int readFIFO(int fd, unsigned char* FifoData, unsigned char anz);
+int flushFIFO(int fd);
+
 
 
 

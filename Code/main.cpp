@@ -7,12 +7,27 @@ int main()
 {
   int fd;
   unsigned char data = 0xFF;
+  unsigned char FifoTest[5] = {0xFE, 0x25, 0xFF, 0xFF, 0xAB};
+  unsigned char FifoTestCheck[5] = {0,0,0,0,0};
   unsigned char Version;
 
-  fd =configSPI(MODE_0);
-  writeRegister(fd, SerialSpeedReg, data);
-  Version = readRegister(fd, SerialSpeedReg);
-  printf("\n Value in VersionReg: %X \n", Version);
+  fd = configSPI(MODE_0);
+
+  writeFIFO(fd, FifoTest, 5);
+  readFIFO(fd, FifoTestCheck, 5);
+
+  for(int i = 0; i < 5; i++)
+  {
+    printf("%X \t", *(FifoTestCheck+i));
+  }
+    printf("FifoLevel: %X \n", readRegister(fd, FIFOLevelReg));
+
+
+  flushFIFO(fd);
+
+
+
+ // printf("\n Value in VersionReg: %X \n", Version);
 
 }
 
